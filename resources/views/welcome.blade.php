@@ -1,1 +1,5 @@
-<?php dd('Hello world');
+<?php
+
+declare(strict_types=1);
+
+dd('Hello world');
