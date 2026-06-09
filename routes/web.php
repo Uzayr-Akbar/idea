@@ -3,9 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisteredUserController;
 
 Route::get('/', fn() => view('welcome'));
-Route::get('/about', function (): never {
-    dd('About page');
-});
-Route::get('/settigns', fn() => 'settings page');
+
+Route::get('/register', [RegisteredUserController::class, 'create']);
