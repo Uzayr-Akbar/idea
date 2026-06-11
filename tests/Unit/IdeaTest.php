@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use App\Models\Idea;
-use Illuminate\Support\Collection;
 
 test('it belongs to a user', function () {
     $idea = Idea::factory()->create();

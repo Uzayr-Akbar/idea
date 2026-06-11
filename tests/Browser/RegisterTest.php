@@ -1,7 +1,12 @@
 <?php
 
-test('the application returns a successful response', function () {
-    $response = $this->get('/');
+it("registers a new user", function () {
+    visit("/register")
+        ->fill("name", fake()->name())
+        ->fill("email", fake()->safeEmail())
+        ->fill("password", "Password1234!!@")
+        ->click("@register")
+        ->assertPathIs("/");
 
-    $response->assertStatus(200);
+    $this->assertAuthenticated();
 });
