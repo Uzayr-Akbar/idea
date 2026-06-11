@@ -19,10 +19,13 @@ class SessionsController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($validated)) {
-            return redirect('/')->with('success', 'Logged in successfully');
+        if (!Auth::attempt($validated)) {
+            $request->session()->regenerate();
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records'
+            ])->onlyInput('email');
         }
-        return redirect('/login');
+           return redirect('/')->with('success', 'Logged in successfully');
     }
 
     public function destroy()

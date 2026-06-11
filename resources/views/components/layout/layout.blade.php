@@ -10,10 +10,10 @@
 </head>
 
 <body class="bg-background text-foreground">
-<x-layout.nav/>
-<main class="mx-auto max-w-7xl px-6">
-    {{ $slot }}
-</main>
+    <x-layout.nav />
+    <main class="mx-auto max-w-7xl px-6">
+        {{ $slot }}
+    </main>
 </body>
-</html>
 
+</html>
