@@ -1,6 +1,8 @@
 <x-layout.layout>
     Hello world
-    @php
-        dump(session()->all());
-    @endphp
+    @if (session('success'))
+        <p class="alert">
+            {{ session('success') }}
+        </p>
+    @endif
 </x-layout.layout>

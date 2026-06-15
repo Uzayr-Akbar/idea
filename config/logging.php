@@ -41,7 +41,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Log Channels
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------i----------------------
     |
     | Here you may configure the log channels for your application. Laravel
     | utilizes the Monolog PHP logging library, which includes a variety

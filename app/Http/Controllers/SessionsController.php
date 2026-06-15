@@ -21,11 +21,15 @@ class SessionsController extends Controller
 
         if (!Auth::attempt($validated)) {
             $request->session()->regenerate();
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records'
-            ])->onlyInput('email');
+            return back()
+            ->withErrors(
+                ['email' => 'the provided credentials do not match our record']
+            )
+            ->withInput();
         }
-           return redirect('/')->with('success', 'Logged in successfully');
+        $request->session()->regenerate();
+        return redirect()->intended('/')
+        ->with('success', 'You have logged in successfully');
     }
 
     public function destroy()

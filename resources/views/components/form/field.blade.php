@@ -2,7 +2,7 @@
 <div class="space-y-2">
     <label for="{{ $name }}">{{ $label }}</label>
     <input name="{{ $name }}" id="{{ $name }}" type="{{ $type }}" class="input  mt-3"
-        {{ $attributes }}>
+        value="{{ old($name) }}" {{ $attributes }}>
 
     @error($name)
         <p class="error">
