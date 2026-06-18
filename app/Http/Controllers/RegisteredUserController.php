@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
                 "string",
                 "email",
                 "max:255",
-                Rule::unique("users", "email"),
+                "unique:users,email",
             ],
             "password" => ["required", Password::defaults()],
         ]);
