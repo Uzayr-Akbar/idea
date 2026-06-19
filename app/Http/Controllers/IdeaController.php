@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeasRequest;
 use App\Http\Requests\UpdateIdeasRequest;
 use App\IdeaStatus;
 use App\Models\Idea;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class IdeaController extends Controller
 {
     /**
@@ -16,27 +19,27 @@ class IdeaController extends Controller
     public function index(Request $request)
     {
         $status = $request->enum('status', IdeaStatus::class);
-        
+
         $ideas = Auth::user()
-                    ->ideas()
-                    ->when($status, fn($query, $status)=>$query->where('status' , $status->value))
-                    ->get();
+            ->ideas()
+            ->when($status, fn ($query, $status) => $query->where('status', $status->value))
+            ->get();
 
         $statusCount = Idea::statusCounts(Auth::user());
 
         $isFiltered = isset($status);
-        
-        return view("idea.index", [
-            "ideas" => $ideas,
-            "statusCount" => $statusCount,
-            "isFiltered" => $isFiltered
+
+        return view('idea.index', [
+            'ideas' => $ideas,
+            'statusCount' => $statusCount,
+            'isFiltered' => $isFiltered,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -44,7 +47,7 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeasRequest $request)
+    public function store(StoreIdeasRequest $request): void
     {
         //
     }
@@ -52,7 +55,7 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea)
+    public function show(Idea $idea): void
     {
         //
     }
@@ -60,7 +63,7 @@ class IdeaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Idea $idea)
+    public function edit(Idea $idea): void
     {
         //
     }
@@ -68,7 +71,7 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIdeasRequest $request, Idea $idea)
+    public function update(UpdateIdeasRequest $request, Idea $idea): void
     {
         //
     }

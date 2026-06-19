@@ -19,7 +19,7 @@ use Tests\TestCase;
 pest()
     ->extend(TestCase::class)
     ->use(RefreshDatabase::class)
-    ->in("Browser", "Unit", 'Feature');
+    ->in('Browser', 'Unit', 'Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ pest()
 |
 */
 
-expect()->extend("toBeOne", fn() => $this->toBe(1));
+expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 /*
 |--------------------------------------------------------------------------

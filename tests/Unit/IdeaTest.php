@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Idea;
+use App\Models\User;
 
 test('it belongs to a user', function () {
     $idea = Idea::factory()->create();
@@ -15,4 +15,4 @@ test('it can have steps', function () {
     ]);
 });
 
-test('it can have steps description',  function () {});
+test('it can have steps description', function () {});
