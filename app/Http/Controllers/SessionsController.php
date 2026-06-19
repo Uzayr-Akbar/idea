@@ -9,32 +9,36 @@ class SessionsController extends Controller
 {
     public function create()
     {
-        return view('auth.login');
+        return view("auth.login");
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required | email',
-            'password' => 'required',
+            "email" => ["required", "email"],
+            "password" => "required",
         ]);
 
         if (!Auth::attempt($validated)) {
             $request->session()->regenerate();
             return back()
-            ->withErrors(
-                ['email' => 'the provided credentials do not match our record']
-            )
-            ->withInput();
+                ->withErrors([
+                    "email" =>
+                        "the provided credentials do not match our record",
+                ])
+                ->withInput();
         }
         $request->session()->regenerate();
-        return redirect()->intended('/')
-        ->with('success', 'You have logged in successfully');
+        return redirect()
+            ->intended("/")
+            ->with("success", "You have logged in successfully");
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
         Auth::logout();
-        return redirect('/login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect("/login");
     }
 }

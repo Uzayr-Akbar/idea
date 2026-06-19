@@ -31,3 +31,5 @@ it("requires a valid email", function () {
         ->click("@register")
         ->assertPathIs("/register");
 });
+
+$var = 'foobar';
