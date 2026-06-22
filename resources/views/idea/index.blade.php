@@ -36,4 +36,5 @@
                 @endforelse
             </div>
         </div>
+    </div>
 </x-layout.layout>

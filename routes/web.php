@@ -22,9 +22,13 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::delete('/logout', [SessionsController::class, 'destroy']);
 
-    Route::get('/ideas', [IdeaController::class, 'index']);
+    Route::get('/ideas', [IdeaController::class, 'index'])->name('idea.index');
 
     Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('idea.show');
+
+    Route::get('/ideas/create', [IdeaController::class, 'create']);
+
+    Route::post('/ideas', [IdeaController::class, 'store']);
 });
 
 Route::get('/randomRoute', fn () => view('idea.index'));
