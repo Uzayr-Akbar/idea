@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ideas/create', [IdeaController::class, 'create']);
 
     Route::post('/ideas', [IdeaController::class, 'store']);
+
+    Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('idea.destroy')->middleware('can:delete,idea');
 });
 
 Route::get('/randomRoute', fn () => view('idea.index'));

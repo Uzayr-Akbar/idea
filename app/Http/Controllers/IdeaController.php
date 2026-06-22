@@ -8,9 +8,12 @@ use App\Http\Requests\StoreIdeasRequest;
 use App\Http\Requests\UpdateIdeasRequest;
 use App\IdeaStatus;
 use App\Models\Idea;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Policies\IdeaPolicy;
 
+#[UsePolicy(IdeaPolicy::class)]
 class IdeaController extends Controller
 {
     /**
@@ -82,5 +85,8 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea) {}
+    public function destroy(Idea $idea) {
+        $idea->delete();
+        return redirect()->route('idea.index');
+    }
 }
