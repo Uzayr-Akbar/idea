@@ -1,6 +1,6 @@
 <x-layout.layout>
     Hello world
-    @if ( session('success'))
+    @if (session('success'))
         <p class="alert">
             {{ session('success') }}
         </p>

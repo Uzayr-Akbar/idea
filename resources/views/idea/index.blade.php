@@ -6,17 +6,21 @@
             </h1>
             <p class="text-muted-foreground text-sm mt-2">
             <p> Capture your thoughts. Make a plan.</p>
+
+            <x-card is="button" type="button" x-data @click="$dispatch('open-modal', 'create-idea')"
+                    class="mt-10 cursor-pointer h-32 w-full text-left">
+                <p>Whats the idea?</p>
+            </x-card>
         </header>
         <div class="mt-10 text-muted-foreground">
             <div class="mb-3 space-x-2">
-                <!-- request()->enum('status', Idea)-->
                 <a href="/ideas" class="btn {{ $isFiltered ? 'btn-outlined' : '' }}">All
                     <span class="text-xs pl-3">{{ $statusCount['all'] }}</span>
                 </a>
                 @foreach (App\IdeaStatus::cases() as $status)
                     <a
-                       href="/ideas?status={{ $status }}"
-                       class="btn {{ request('status') === $status->value ? '' : 'btn-outlined' }}">{{ $status->label() }}
+                        href="/ideas?status={{ $status }}"
+                        class="btn {{ request('status') === $status->value ? '' : 'btn-outlined' }}">{{ $status->label() }}
                         <span class="text-xs pl-3">{{ $statusCount->get($status->value) }}</span>
                     </a>
                 @endforeach
@@ -25,16 +29,35 @@
                 @forelse($ideas as $idea)
                     <x-card href="{{ route('idea.show', $idea) }}">
                         <h3 class="text-foreground text-lg">{{ $idea->title }}</h3>
-                        <x-status-label class="mt-7" status="{{ $idea->status }}">{{ $idea->status->label() }}</x-status-label>
+                        <x-status-label class="mt-7"
+                                        status="{{ $idea->status }}">{{ $idea->status->label() }}</x-status-label>
                         <div class="mt-5 line-clamp-3">{{ $idea->description }}</div>
                         <div class="mt-4"> {{ $idea->created_at->diffForHumans() }}</div>
                     </x-card>
                 @empty
-                    <x-card>
-                        <p>No ideas. Start creating now!!!</p>
+                    <x-card href="{{ route('idea.create') }}">
+                        <p>aNo ideas. Start creating now!!!</p>
                     </x-card>
                 @endforelse
             </div>
+            <!-- Create-idea-modal -->
+
+            <x-modal name="create-idea"
+                     title="New Idea"
+                     class="shadow-xl max-w-2xl w-full max-h-[80dvh] overflow-auto">
+                <form action="{{ route('idea.store') }}" method="POST">
+                    @method('POST')
+                    @csrf
+                    <div class="space-y-6">
+                        <x-form.field
+                            label="Title"
+                            name="Title"
+                            placeholder="Enter and idea for your title"
+                            autofocus>
+                        </x-form.field>
+                    </div>
+                </form>
+            </x-modal>
         </div>
     </div>
 </x-layout.layout>

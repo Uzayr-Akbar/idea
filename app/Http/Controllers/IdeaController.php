@@ -25,7 +25,7 @@ class IdeaController extends Controller
 
         $ideas = Auth::user()
             ->ideas()
-            ->when($status, fn ($query, $status) => $query->where('status', $status->value))
+            ->when($status, fn($query, $status) => $query->where('status', $status->value))
             ->get();
 
         $statusCount = Idea::statusCounts(Auth::user());
@@ -45,15 +45,19 @@ class IdeaController extends Controller
     public function create()
     {
         //
-        return view('idea.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeasRequest $request): void
+    public function store(StoreIdeasRequest $request): \Illuminate\Http\RedirectResponse
     {
-        //
+        $idea = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+        Auth::user()->ideas()->create($idea);
+        return redirect()->route('idea.index');
     }
 
     /**
@@ -85,7 +89,8 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea) {
+    public function destroy(Idea $idea)
+    {
         $idea->delete();
         return redirect()->route('idea.index');
     }
