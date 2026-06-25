@@ -3,12 +3,12 @@
 
         <div class="flex justify-between">
             <a href="{{ route('idea.index') }}" class="flex items-center gap-x-2 text-sm font-medium">
-                <x-icons.arrow-back/>
+                <x-css-arrow-left/>
                 Back to ideas.
             </a>
             <div class="flex items-center gap-x-2">
                 <button class="btn btn-outlined">
-                    <x-icons.external/>
+                    <x-css-external/>
                     Edit
                 </button>
                 <form action="{{ route('idea.destroy', $idea) }}" method="POST">
@@ -38,7 +38,7 @@
                     @foreach ($idea->links as $link)
                         <x-card href="{{$link}}"
                                 class="mt-5 text-primary font-medium  flex gap-x-3 items-center">
-                            <x-icons.external/> {{ $link }}
+                            <x-css-external/> {{ $link }}
                         </x-card>
                     @endforeach
                 @endif

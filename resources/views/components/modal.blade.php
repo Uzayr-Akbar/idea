@@ -1,9 +1,6 @@
-@props([
-    'name',
-    'title'
-    ])
+@props(['name', 'title'])
 
-<div x-data="{ show: false, name: @js($name) }"
+<div x-data="{ show: false, name: @js($name, JSON_THROW_ON_ERROR) }"
      @open-modal.window="$event.detail === name ? show = true : show = false"
      x-show="show"
      @keydown.escape.window="show = false"
@@ -19,17 +16,16 @@
      aria-modal="true"
      aria-labelledby="modal-{{ $name }}-title"
      :aria-hidden="!show"
-     tabindex="-1"
->
-    <x-card @click.away="show = false" class="w-1/3">
-        <div>
-            <button @click="show = false">
+     tabindex="-1">
+    <x-card @click.away="show = false" class="shadow-xl max-w-2xl w-full max-h-[80dvh] overflow-auto">
+        <div class="justify-between flex items-center mb-4">
+            <h2 id="modal-{{ $name }}-title" class="text-xl font-bold text-white">{{ $title }}</h2>
+            <button @click="show = false" aria-label="close modal">
                 <x-icons.close/>
             </button>
-            <h2 id="modal-{{ $name }}-title" class="text-xl font-bold">{{$title}}</h2>
         </div>
         <div>
-            {{$slot}}
+            {{ $slot }}
         </div>
     </x-card>
 </div>

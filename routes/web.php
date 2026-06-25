@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/logout', [SessionsController::class, 'destroy']);
 
     Route::get('/ideas', [IdeaController::class, 'index'])->name('idea.index');
-    
+
     Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('idea.show');
 
     Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit'])->name('idea.edit')->middleware('can:update,idea');

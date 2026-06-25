@@ -52,10 +52,7 @@ class IdeaController extends Controller
      */
     public function store(StoreIdeasRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $idea = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
+        $idea = $request->validated();
         Auth::user()->ideas()->create($idea);
         return redirect()->route('idea.index');
     }
