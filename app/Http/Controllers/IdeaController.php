@@ -26,6 +26,7 @@ class IdeaController extends Controller
         $ideas = Auth::user()
             ->ideas()
             ->when($status, fn($query, $status) => $query->where('status', $status->value))
+            ->orderByDesc('created_at')
             ->get();
 
         $statusCount = Idea::statusCounts(Auth::user());

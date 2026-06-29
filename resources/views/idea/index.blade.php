@@ -13,8 +13,9 @@ use App\IdeaStatus;
             <p class="text-muted-foreground text-sm mt-2">
             <p> Capture your thoughts. Make a plan.</p>
 
-            <x-card is="button" type="button" x-data @click="$dispatch('open-modal', 'create-idea')"
-                    class="mt-10 cursor-pointer h-32 w-full text-left">
+            <x-card is="button" type="button" data-test="createIdeaForm" x-data
+                    @click="$dispatch('open-modal', 'create-idea')"
+                    class="mt-10 cursor-pointer w-full text-left">
                 <p>Whats the idea?</p>
             </x-card>
         </header>
@@ -23,7 +24,7 @@ use App\IdeaStatus;
                 <a href="/ideas" class="btn {{ $isFiltered ? 'btn-outlined' : '' }}">All
                     <span class="text-xs pl-3">{{ $statusCount['all'] }}</span>
                 </a>
-                @foreach (App\IdeaStatus::cases() as $status)
+                @foreach (IdeaStatus::cases() as $status)
                     <a
                         href="/ideas?status={{ $status }}"
                         class="btn {{ request('status') === $status->value ? '' : 'btn-outlined' }}">{{ $status->label() }}
@@ -57,31 +58,44 @@ use App\IdeaStatus;
                     <div class="space-y-6">
                         <x-form.field
                             label="Title"
-                            name="Title"
-                            placeholder="Enter an idea for your title"
+                            name="title"
+                            placeholder="Enter a title for you idea"
                             autofocus
+                            required
                         />
-                        <div class="flex gap-x-3">
-                            @foreach(IdeaStatus::cases() as $status)
-                                <button
-                                    type="button"
-                                    @click="status = @js($status->value)"
-                                    class="btn flex-1 h-10"
-                                    :class="{'btn-outlined': status !== @js($status->value)}">
-                                    {{$status->label()}}
-                                </button>
-                            @endforeach
+                        <div>
+                            <div class="flex gap-x-3">
+                                @foreach(IdeaStatus::cases() as $status)
+                                    <button
+                                        data-test="button-status-{{$status}}"
+                                        type="button"
+                                        @click="status = @js($status->value)"
+                                        class="btn flex-1 h-10"
+                                        :class="{'btn-outlined': status !== @js($status->value)}"
+                                        data-test="button-status">
+                                        {{$status->label()}}
+                                    </button>
+                                @endforeach
 
-                            <input type="hidden" name="status" :value=status>
+                                <input type="hidden" name="status" :value="status">
+                            </div>
+
+                            <x-form.error name="status"/>
+                        </div>
+                        <div>
+                            <x-form.field
+                                label="Description"
+                                name="description"
+                                placeholder="Enter a description for your idea"
+                            />
                         </div>
 
-                        <x-form.field
-                            label="Description"
-                            name="Description"
-                            placeholder="Enter an idea for your description"
-                        />
-
-
+                    </div>
+                    <div class="flex justify-end gap-x-5 mt-4">
+                        <button @click="show=false"
+                                type="button" class="btn btn-outlined">Cancel
+                        </button>
+                        <button data-test="button-submit" type="submit" class="btn">Create</button>
                     </div>
                 </form>
             </x-modal>

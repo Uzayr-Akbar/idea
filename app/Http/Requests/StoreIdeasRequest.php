@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\IdeaStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreIdeasRequest extends FormRequest
 {
@@ -25,8 +27,9 @@ class StoreIdeasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
+            'title' => ['required', 'string', 'max:255',],
+            'description' => ['string', 'nullable'],
+            'status' => ['required', Rule::enum(IdeaStatus::class)],
         ];
     }
 }
